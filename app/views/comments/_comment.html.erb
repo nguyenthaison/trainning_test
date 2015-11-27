@@ -1,3 +1,17 @@
-<label><%= comment.content %></label><br>
-<%= link_to "delete", comment, method: :delete,
-                                       data: { confirm: "You sure?" } %>
+<div class="panel panel-default" id="comment-id<%= comment.id %>">
+<div class="panel-body">
+  <div class="user-comment">
+    <!-- <%= gravatar_for comment.user %> -->
+    <span>
+      <%= link_to comment.user.name, comment.entry.user %><br>
+      <%= time_ago_in_words(comment.created_at) %> ago<br>
+      <% if logged_in? && comment.user_id == current_user.id %>
+        <div id="delete"><%= link_to image_tag("image.png"), comment, method: :delete, data: { confirm: "You sure?" } %></div>
+      <% end %>
+    </span>
+    <br>
+    <%= comment.content %>
+  </div>
+</div>
+</div>
+

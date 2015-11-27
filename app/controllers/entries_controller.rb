@@ -6,6 +6,7 @@ class EntriesController < ApplicationController
     @entry = current_user.entries.build(entry_params)
     if @entry.save
       flash[:success] = "entry created!"
+
       redirect_to root_url
     else
       @feed_items = current_user.feed.paginate(page: params[:page])
@@ -24,6 +25,7 @@ class EntriesController < ApplicationController
       params.require(:entry).permit(:content)
     end
     def correct_user
+      # byebug
       @entry = current_user.entries.find_by(id: params[:id])
       redirect_to root_url if @entry.nil?
     end

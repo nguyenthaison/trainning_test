@@ -1,9 +1,10 @@
 class CommentsController < ApplicationController
-  before_action :correct_user,   only: :destroy
+  before_action :logged_in_user, only: [:create, :destroy]
 
   def create
     @entry_id = params[:comment][:entry_id]
     @comment = Comment.new(user_params)
+    @comment.user_id = current_user.id
     if @comment.save
       respond_to do |format|
         # format.html(redirect_to request.referer)
@@ -15,18 +16,21 @@ class CommentsController < ApplicationController
     end
   end
   def destroy
-    @comment.destroy
-    flash[:success] = "Comment deleted"
-    redirect_to request.referrer || root_url
+    @comment = Comment.find(params[:id])
+    if @comment.destroy
+      redirect_to root_url
+    end
+    # if @comment.destroy
+    #   respond_to do |format|
+    #     format.html { redirect_to  request.referer}
+    #   end
+    # else
+    #   redirect_to root_url
+    # end
   end
 
   private
     def user_params
       params.require(:comment).permit(:user_id,:entry_id,:content)
     end
-
-    def correct_user
-    @comment = current_user.comments.find_by(id: params[:id])
-    redirect_to root_url if @comment.nil?
-  end
 end

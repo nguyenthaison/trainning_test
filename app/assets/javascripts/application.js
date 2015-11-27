@@ -16,8 +16,12 @@
 //= require_tree .
 //= require bootstrap
 
-$(document).ready(function(){
+/*$(document).ready(function(){
   $("p").click(function(){
     $(".comment").css("display","inline")
   });
-});
+});*/
+function showComment(id){
+  $("#"+id).css("display","inline")
+}
+

@@ -10,10 +10,10 @@
                                        data: { confirm: "You sure?" } %>
     <%end%>
   </span>
-  <p>comment</p>
-  <div class="comment">
+  <p onclick="showComment(<%= entry.id %>)" style="color:#679bdb">comment</p>
+  <div id="<%= entry.id %>"  style="display:none" class="comment">
     <%= form_for(Comment.new, remote: true) do |f| %>
-      <%= f.text_field :content,class:"comment_content", placeholder: "comment" %><br />
+      <%= f.text_field :content,class:"form-control", placeholder: "comment" %><br />
       <%= f.hidden_field :entry_id, :value => entry.id %><br />
     <% end %>
   <div id="show-comment-<%= entry.id %>">
@@ -23,3 +23,4 @@
   </div>
 </li>
 </div>
+
